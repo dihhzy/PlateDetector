@@ -4,13 +4,17 @@ import glob
 from roboflow import Roboflow
 from ultralytics import YOLO
 from dotenv import load_dotenv
+
 load_dotenv()
 
 def train_new_dataset():
     print("---DOWNLOADING DATASET---")
     api_key = os.getenv("ROBOFLOW_API_KEY")
     if not api_key:
-        raise ValueError("❌ ROBOFLOW_API_KEY environment variable not set!")
+        raise ValueError("ROBOFLOW_API_KEY environment variable not set!")
+    
+    rf = Roboflow(api_key=api_key)
+    project = rf.workspace("x-pagfi").project("indonesian-license-plate-detection-zvnve-g8p0f")
     
     dataset = project.version(2).download("yolov11")
     dataset_path = dataset.location
