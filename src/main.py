@@ -179,7 +179,7 @@ while cap.isOpened():
                                     clean_plate = plate_crop[0:int(h * 0.75), :]
 
                                     #if camera is upside down
-                                    #clean_plate = cv2.flip(clean_plate, 0)
+                                    #clean_plate = cv2.flip(clean_plate, 1)
                                     
                                     gray_plate = cv2.cvtColor(clean_plate, cv2.COLOR_BGR2GRAY)
                                     
