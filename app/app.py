@@ -7,7 +7,10 @@ import os
 from ultralytics import YOLO
 from fast_plate_ocr import LicensePlateRecognizer
 
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_DIR = os.path.join(CURRENT_DIR, '..', 'models')
 
+st.set_page_config(page_title="LPR Demo", layout="wide")
 MODEL_DIR = '../models'
 
 st.set_page_config(page_title="LPR Demo", layout="wide")
