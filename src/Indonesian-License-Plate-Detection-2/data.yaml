@@ -1,12 +1,12 @@
 names:
 - license_plate
 nc: 1
-path: C:\Users\dave08\Downloads\ES - All\ES - Code\main\train_yolo\Indonesian-License-Plate-Detection-2
+path: .
 roboflow:
   license: CC BY 4.0
   project: indonesian-license-plate-detection-zvnve-g8p0f
   url: https://universe.roboflow.com/x-pagfi/indonesian-license-plate-detection-zvnve-g8p0f/dataset/2
   version: 2
   workspace: x-pagfi
-train: C:\Users\dave08\Downloads\ES - All\ES - Code\main\train_yolo\Indonesian-License-Plate-Detection-2\train\images
-val: C:\Users\dave08\Downloads\ES - All\ES - Code\main\train_yolo\Indonesian-License-Plate-Detection-2\valid\images
+train: train/images
+val: valid/images
