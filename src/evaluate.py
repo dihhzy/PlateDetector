@@ -21,7 +21,7 @@ def evaluate():
         return
 
     try:
-        ocr = LicensePlateRecognizer('global-plates-mobile-vit-v2-model', device='cuda')
+        ocr = LicensePlateRecognizer('cct-s-v1-global-model', device='cuda')
         print("FastPlateOCR Model Loaded Successfully")
     except Exception as e:
         print(f"Error loading FastPlateOCR: {e}")
@@ -110,8 +110,7 @@ def evaluate():
                             if plate_crop.size > 0 and ocr is not None:
                                 h, w = plate_crop.shape[:2]
                                 clean_plate = plate_crop[0:int(h * 0.95), :]
-                                gray_plate = cv2.cvtColor(clean_plate, cv2.COLOR_BGR2GRAY)
-                                processed_plate = cv2.resize(gray_plate, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+                                processed_plate = cv2.resize(clean_plate, (128, 64), interpolation=cv2.INTER_CUBIC)
                                 
                                 ocr_result = ocr.run(processed_plate)
                                 
@@ -143,8 +142,7 @@ def evaluate():
                     if plate_crop.size > 0 and ocr is not None:
                         h, w = plate_crop.shape[:2]
                         clean_plate = plate_crop[0:int(h * 0.75), :]
-                        gray_plate = cv2.cvtColor(clean_plate, cv2.COLOR_BGR2GRAY)
-                        processed_plate = cv2.resize(gray_plate, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+                        processed_plate = cv2.resize(clean_plate, (128, 64), interpolation=cv2.INTER_CUBIC)
                         
                         ocr_result = ocr.run(processed_plate)
                         text = ""

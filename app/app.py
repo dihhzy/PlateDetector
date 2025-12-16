@@ -24,8 +24,8 @@ def load_models():
     yolo_model = YOLO(os.path.join(MODEL_DIR, 'yolo11n.pt'))
     plate_model = YOLO(os.path.join(MODEL_DIR, 'plate_yolo11.pt'))
     
-    ocr_model = LicensePlateRecognizer('global-plates-mobile-vit-v2-model', device='cuda')
-    #ocr_model = LicensePlateRecognizer('global-plates-mobile-vit-v2-model', device='cpu')
+    ocr_model = LicensePlateRecognizer('cct-s-v1-global-model', device='cuda')
+    #ocr_model = LicensePlateRecognizer('cct-s-v1-global-model', device='cpu')
     return yolo_model, plate_model, ocr_model
 
 try:
@@ -42,9 +42,7 @@ def process_plate_image(plate_crop):
         plate_crop = cv2.flip(plate_crop, 1)
 
     h, w = plate_crop.shape[:2]
-    # Gray Scale and Resize
-    gray_plate = cv2.cvtColor(plate_crop, cv2.COLOR_BGR2GRAY)
-    processed_plate = cv2.resize(gray_plate, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+    processed_plate = cv2.resize(plate_crop, (128, 64), interpolation=cv2.INTER_CUBIC)
     return processed_plate
 
 def run_ocr(processed_plate):

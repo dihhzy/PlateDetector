@@ -14,7 +14,7 @@ from datetime import datetime
 # Change the section id to EXIT_GATE if used at exit point
 SECTION_ID = "ENTRY_GATE" 
 
-DATA_DIR = 'data'
+DATA_DIR = '../data'
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
@@ -49,7 +49,7 @@ plate_output_folder = os.path.join(OUTPUT_DIR, 'plates')
 if not os.path.exists(plate_output_folder):
     os.makedirs(plate_output_folder)
 
-ocr_output_folder = os.path.join(OUTPUT_DIR, 'debug')
+ocr_output_folder = os.path.join(OUTPUT_DIR, 'result')
 if not os.path.exists(ocr_output_folder):
     os.makedirs(ocr_output_folder)
 
@@ -60,8 +60,8 @@ plate_model = YOLO(os.path.join(MODEL_DIR, 'plate_yolo11.pt'))
 print("Initializing FastPlateOCR Pipeline")
 try:
     #cuda for gpu, rasp use cpu
-    ocr = LicensePlateRecognizer('global-plates-mobile-vit-v2-model', device='cuda')
-#   ocr = LicensePlateRecognizer('global-plates-mobile-vit-v2-model', device='cpu')
+    ocr = LicensePlateRecognizer('cct-s-v1-global-model', device='cuda')
+#   ocr = LicensePlateRecognizer('cct-s-v1-global-model', device='cpu')
     print("FastPlateOCR Model Loaded Successfully")
 except Exception as e:
     print(f"Error loading FastPlateOCR: {e}")
@@ -181,12 +181,10 @@ while cap.isOpened():
                                     #if camera is upside down
                                     #clean_plate = cv2.flip(clean_plate, 1)
                                     
-                                    gray_plate = cv2.cvtColor(clean_plate, cv2.COLOR_BGR2GRAY)
+                                    processed_plate = cv2.resize(clean_plate, (128, 64), interpolation=cv2.INTER_CUBIC)
                                     
-                                    processed_plate = cv2.resize(gray_plate, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
-
-                                    debug_filename = os.path.join(ocr_output_folder, f"debug_{track_id}.jpg")
-                                    cv2.imwrite(debug_filename, processed_plate)
+                                    res_filename = os.path.join(ocr_output_folder, f"result_{track_id}.jpg")
+                                    cv2.imwrite(res_filename, processed_plate)
                                     # ---------------------------------
 
                                     print("Performing OCR using FastPlateOCR...")
@@ -232,7 +230,7 @@ while cap.isOpened():
                                             
                                             conn.commit()
                                             conn.close()
-                                            print(f"💾 Saved to Database (Section: {SECTION_ID})")
+                                            print(f"Saved to Database (Section: {SECTION_ID})")
                                         except Exception as db_e:
                                             print(f"Database Error: {db_e}")
                                         # ----------------------------------
