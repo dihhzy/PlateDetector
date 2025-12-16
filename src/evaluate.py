@@ -16,6 +16,8 @@ def evaluate():
     try:
         model = YOLO(os.path.join(MODEL_DIR, 'yolo11n.pt'))
         plate_model = YOLO(os.path.join(MODEL_DIR, 'plate_yolo11.pt'))
+        print(model.info(detailed=True))
+        print("YOLO Models Loaded Successfully")
     except Exception as e:
         print(f"Error loading YOLO models: {e}")
         return
