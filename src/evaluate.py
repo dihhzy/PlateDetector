@@ -128,7 +128,7 @@ def evaluate():
                                     print(f"Plate Detected: {text}")
                                     
                                     cv2.putText(frame, text, (abs_x1, abs_y1 - 10), 
-                                                cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 3)
+                                                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
                                 else:
                                     print("Plate detected but OCR failed.")
 
